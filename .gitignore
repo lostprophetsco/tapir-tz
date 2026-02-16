@@ -22,3 +22,14 @@ logs
 .env
 .env.*
 !.env.example
+
+# Linting cache
+.eslintcache
+.stylelintcache
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Coverage
+coverage
+*.lcov
