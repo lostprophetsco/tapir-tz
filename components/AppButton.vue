@@ -23,19 +23,10 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   modifier: 'primary',
   loading: false,
-  loadingText: 'Загрузка',
+  loadingText: 'Загрузка...',
 })
-
-const emit = defineEmits<{
-  click: []
-}>()
 
 const isLink = computed(() => !!props.to)
-
-const linkProps = computed(() => {
-  return isLink.value ? { to: props.to } : {}
-})
-
 const buttonClasses = computed(() => [
   'btn',
   `btn--${props.modifier}`,

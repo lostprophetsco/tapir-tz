@@ -1,0 +1,56 @@
+@use 'assets/css/mixins' as mixin;
+
+.catalog {
+	display: flex;
+	flex-flow: column;
+	min-height: 100vh;
+
+
+	// .catalog__content
+	&__content {
+		padding: 20px 0 40px;
+
+		@include mixin.desktop {
+			padding: 100px 0;
+		}
+
+	}
+
+	// .catalog__container
+	&__container {
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		gap: 40px;
+
+		@include mixin.desktop {
+			gap: 110px;
+		}
+	}
+
+	// .catalog__grid
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 20px;
+
+		@include mixin.desktop {
+			grid-template-columns: repeat(4, 1fr);
+			gap: 40px;
+		}
+	}
+
+	// .catalog__more
+	&__more {
+	}
+}
+
+
+.loading {
+}
+
+.error {
+	// .error__message
+	&__message {
+	}
+}
