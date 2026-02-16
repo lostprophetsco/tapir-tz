@@ -1,6 +1,7 @@
 @use 'reset-css';
 @use 'variables';
 @use 'mixins' as mixins;
+@use './pages/main';
 @use './components/AppButton';
 @use './components/AppHeader';
 @use './components/AppFooter';

@@ -1,13 +1,10 @@
 <template>
   <div class="main">
     <AppHeader />
+    <main class="container main__container">
+      <h1>Главная страница</h1>
 
-    <main class="main__content">
-      <div class="container main__container">
-        <h1>Главная страница</h1>
-
-        <AppButton to="/catalog">В каталог</AppButton>
-      </div>
+      <AppButton to="/catalog">В каталог</AppButton>
     </main>
   </div>
 

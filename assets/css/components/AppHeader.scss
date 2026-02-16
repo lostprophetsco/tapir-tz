@@ -1,6 +1,7 @@
 @use 'assets/css/mixins' as mixin;
 
 .header {
+	width: 100%;
 	padding: 20px 0;
 
 	// .header__container
@@ -51,7 +52,7 @@
 	// .header__burger
 	&__burger {
 		position: relative;
-		display: none;
+		display: flex;
 		justify-content: center;
 		align-items: center;
 		width: 40px;
@@ -60,7 +61,7 @@
 		cursor: pointer;
 
 		@include mixin.desktop {
-			display: flex;
+			display: none;
 		}
 	}
 }
