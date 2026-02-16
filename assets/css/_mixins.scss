@@ -1,0 +1,16 @@
+$breakpoints: (
+  'mobile': 360px,
+  'desktop': 1440px
+);
+
+@mixin mobile {
+  @media (width <= 1439px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (width >= 1440px) {
+    @content;
+  }
+}

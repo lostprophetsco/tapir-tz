@@ -87,24 +87,31 @@ npm run preview
 
 ```
 ├── components/
-│   ├── AppButton.vue
-│   ├── AppFooter.vue
 │   ├── AppHeader.vue
+│   ├── AppFooter.vue
+│   ├── AppButton.vue
 │   └── AppProductCard.vue
-├── assets/
-│   ├── css/
-│   │   ├── main.scss
-│   │   ├── _mixins.scss
-│   │   ├── components/
-│   │   │   ├── AppButton.scss
-│   │   │   ├── AppFooter.scss
-│   │   │   ├── AppHeader.scss
-│   │   │   └── AppProductCard.scss
-│   │   └── pages/
-│   │       ├── catalog.scss
-│   │       └── main.scss
-│   └── images/
+├── pages/
+│   ├── index.vue
+│   └── catalog.vue
+├── composables/
+│   └── useProducts.ts
+├── types/
+│   └── product.ts
+│── assets/
+│       └── css/
+│           ├── main.scss
+│           ├── _mixins.scss
+│           ├── pages/
+│           │   ├── main.scss
+│           │   └── catalog.scss
+│           └── components/
+│               ├── AppHeader.scss
+│               ├── AppFooter.scss
+│               ├── AppButton.scss
+│               └── AppProductCard.scss
 ├── app.vue
+└── README.md
 ```
 
 ## Технические требования
