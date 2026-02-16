@@ -1,12 +1,8 @@
 @use 'reset-css';
 @use 'variables';
 @use 'mixins' as mixins;
-@use './pages/main';
-@use './pages/catalog';
-@use './components/AppButton';
-@use './components/AppHeader';
-@use './components/AppFooter';
-@use './components/AppProductCard';
+@use './components';
+@use './pages';
 @import 'https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap';
 
 html,

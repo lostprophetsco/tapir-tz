@@ -38,18 +38,30 @@ import AppButton from '~/components/AppButton.vue'
 import AppProductCard from '~/components/AppProductCard.vue'
 import AppFooter from '~/components/AppFooter.vue'
 import type { Product, ApiResponse } from '~/types/api'
+import { useApi } from '~/composables/useApi'
+
+// SEO Meta теги
+useHead({
+  title: 'Каталог товаров',
+  meta: [
+    { name: 'description', content: 'Каталог товаров с пагинацией и фильтрацией' },
+    { name: 'keywords', content: 'товары, каталог, пагинация, интернет-магазин' },
+    { property: 'og:title', content: 'Каталог товаров' },
+    { property: 'og:description', content: 'Каталог товаров с пагинацией' },
+  ],
+})
+
+const { fetchProducts: fetchProductsApi } = useApi()
 
 const products = ref<Product[]>([])
 const loading = ref(false)
 const loadingMore = ref(false)
 const error = ref<string | null>(null)
 const hasMore = ref(true)
-const apiLimit = ref<number>(10)
+const apiLimit = ref<number>(10) // Сохраняем реальный лимит из API
 
-// Computed свойства для условий в шаблоне
 const isLoading = computed(() => loading.value)
 const hasError = computed(() => !!error.value)
-const hasProducts = computed(() => products.value.length > 0)
 const showLoadMore = computed(() => hasMore.value && !isLoading.value && !hasError.value)
 const isLoadingMore = computed(() => loadingMore.value || loading.value)
 
@@ -60,8 +72,8 @@ const fetchProducts = async () => {
 
     console.log('fetchProducts: Starting fetch...')
 
-    // 1. Делаем запрос без параметров для получения лимита по умолчанию
-    const response = await $fetch<ApiResponse>('https://test-task-api.tapir.ws/products')
+    // Используем API composable
+    const response = await fetchProductsApi()
 
     console.log('Full API Response:', response)
     console.log('Response products:', response.products)
@@ -69,7 +81,7 @@ const fetchProducts = async () => {
 
     if (response.products) {
       products.value = response.products
-      apiLimit.value = response.limit // 2. Сохраняем лимит из ответа
+      apiLimit.value = response.limit // Сохраняем реальный лимит из API
       console.log('fetchProducts: Products loaded:', response.products.length)
       console.log('fetchProducts: API limit set to:', apiLimit.value)
     } else {
@@ -89,7 +101,6 @@ const loadMore = async () => {
   try {
     loadingMore.value = true
 
-    // 3. Используем сохраненный лимит для пагинации
     const nextPage = Math.floor(products.value.length / apiLimit.value) + 1
 
     console.log('loadMore: Starting load more...')
@@ -97,22 +108,13 @@ const loadMore = async () => {
     console.log('loadMore: Fetching page:', nextPage)
     console.log('loadMore: Using limit:', apiLimit.value)
 
-    const response = await $fetch<ApiResponse>(
-      `https://test-task-api.tapir.ws/products?page=${nextPage}`
-    )
+    const response = await fetchProductsApi(nextPage, apiLimit.value)
 
     console.log('Load More Response:', response)
     console.log('Load More products:', response.products)
 
     if (response.products) {
       products.value = [...products.value, ...response.products]
-
-      // 4. При обновлениях сверяем limit из ответа
-      if (response.limit !== apiLimit.value) {
-        console.log('loadMore: Limit changed from', apiLimit.value, 'to', response.limit)
-        apiLimit.value = response.limit
-      }
-
       hasMore.value = response.products.length === apiLimit.value
       console.log('loadMore: Products added, total:', products.value.length)
     } else {
