@@ -1,3 +1,47 @@
 .btn {
+  $self: &;
 
+  padding: 10px 28px;
+  border: 1px transparent solid;
+  font-size: var(--font-size-default);
+  line-height: 20px;
+  font-family: var(--default-font), sans-serif;
+  color: var(--color-white);
+  background-color: var(--color-red);
+  transition: all 0.2s ease-in;
+
+  &__loader {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease-in;
+  }
+
+  &__text {
+    transition: all 0.2s ease-in;
+  }
+
+  &--secondary {
+    padding: 10px 24px;
+    border: 1px var(--color-black) solid;
+    color: var(--color-black);
+    background-color: transparent;
+
+    #{$self}--loading {
+      border-color: transparent;
+    }
+  }
+
+  &--loading {
+    // .btn--loading .btn__text
+    #{$self}__text {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    // .btn--loading .btn__loader
+    #{$self}__loader {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 }
