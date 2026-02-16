@@ -1,5 +1,8 @@
+@use 'reset-css';
 @use 'variables';
 @use 'mixins' as mixins;
+@use './components/AppButton';
+@use './components/AppHeader';
 @import 'https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap';
 
 html,
@@ -13,6 +16,7 @@ body {
 .container {
   max-width: 1320px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 h1 {

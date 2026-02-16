@@ -1,4 +1,6 @@
-<template><h1>123123</h1></template>
+<template>
+  <NuxtPage />
+</template>
 
 <script setup lang="ts">
 import '@/assets/css/main.scss'

@@ -1,0 +1,66 @@
+@use 'assets/css/mixins' as mixin;
+
+.header {
+	padding: 20px 0;
+
+	// .header__container
+	&__container {
+		display: flex;
+		align-items: center;
+	}
+
+	// .header__logo
+	&__logo {
+		flex-shrink: 0;
+		width: 28px;
+		height: 28px;
+		background-color: var(--color-red);
+
+		@include mixin.desktop {
+			width: 42px;
+			height: 42px;
+		}
+	}
+
+	// .header__nav
+	&__nav {
+		flex-grow: 1;
+		text-align: center;
+	}
+
+	// .header__nav-list
+	&__nav-list {
+		display: none;
+		justify-content: center;
+		align-items: center;
+		gap: 40px;
+		padding: 10px 24px;
+		background-color: var(--color-grey);
+
+		@include mixin.desktop {
+			display: inline-flex;
+		}
+	}
+
+	// .header__nav-link
+	&__nav-link {
+		color: var(--color-black);
+		text-decoration: none;
+	}
+
+	// .header__burger
+	&__burger {
+		position: relative;
+		display: none;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		background-color: var(--color-grey);
+		cursor: pointer;
+
+		@include mixin.desktop {
+			display: flex;
+		}
+	}
+}

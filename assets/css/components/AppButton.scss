@@ -1,19 +1,25 @@
 .btn {
   $self: &;
 
+  position: relative;
   padding: 10px 28px;
   border: 1px transparent solid;
   font-size: var(--font-size-default);
   line-height: 20px;
   font-family: var(--default-font), sans-serif;
   color: var(--color-white);
+  text-decoration: none;
   background-color: var(--color-red);
   transition: all 0.2s ease-in;
 
   &__loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     opacity: 0;
-    visibility: hidden;
     transition: all 0.2s ease-in;
+    transform: translate(-50%, -50%);
+    visibility: hidden;
   }
 
   &__text {

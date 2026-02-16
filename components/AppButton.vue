@@ -1,5 +1,5 @@
 <template>
-  <button :class="buttonClasses" @click="$emit('click')">
+  <component :is="isLink ? 'a' : 'button'" :href="props.to" :class="buttonClasses">
     <span class="btn__text">
       <slot />
     </span>
@@ -7,7 +7,7 @@
     <span class="btn__loader">
       {{ props.loadingText }}
     </span>
-  </button>
+  </component>
 </template>
 
 <script setup lang="ts">
@@ -17,10 +17,11 @@ interface Props {
   modifier?: 'primary' | 'secondary'
   loading?: boolean
   loadingText?: string
+  to?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'primary',
+  modifier: 'primary',
   loading: false,
   loadingText: 'Загрузка',
 })
@@ -28,6 +29,12 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   click: []
 }>()
+
+const isLink = computed(() => !!props.to)
+
+const linkProps = computed(() => {
+  return isLink.value ? { to: props.to } : {}
+})
 
 const buttonClasses = computed(() => [
   'btn',
