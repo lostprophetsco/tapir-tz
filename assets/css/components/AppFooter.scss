@@ -1,0 +1,47 @@
+@use '../mixins' as mixins;
+
+.footer {
+	padding: 60px 0;
+	background-color: var(--color-black);
+
+	@include mixins.desktop {
+		padding: 100px 0;
+	}
+
+	// .footer__container
+	&__container {
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+		gap: 60px;
+
+		@include mixins.desktop {
+			grid-template-columns: repeat(4, 1fr);
+			gap: 20px;
+		}
+	}
+
+
+	// .footer__menu-list
+	&__menu-list {
+		display: flex;
+		flex-flow: column;
+		gap: 14px;
+	}
+
+	// .footer__menu-item
+	&__menu-item {
+		color: var(--color-white);
+
+		// .footer__menu-item:first-child
+		&:first-child {
+			color: var(--color-dark)
+		}
+	}
+
+
+	// .footer__menu-link
+	&__menu-link {
+		color: currentcolor;
+		text-decoration: none;
+	}
+}
