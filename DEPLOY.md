@@ -57,12 +57,28 @@ npm run generate
 ```
 .output/public/          # Сгенерированные файлы
 ├── index.html        # Главная страница ✅
-├── catalog/         # Страницы с пагинацией
-│   └── index.html  # Страница каталога ✅
+├── catalog.html      # Страница каталога ✅
+├── catalog/         # Вложенные файлы
+│   └── index.html  # Исходник catalog.html
 ├── 200.html         # Перенаправление
 ├── 404.html         # Страница ошибки
 ├── _nuxt/          # JS/CSS ассеты
 └── .nojekyll       # Отключение Jekyll
+```
+
+## 🛠️ Постобработка
+
+### Скрипт post-build.js
+- **Назначение:** Создание `catalog.html` из `catalog/index.html`
+- **Запуск:** Автоматически после `npm run generate`
+- **Результат:** Корректная структура для GitHub Pages
+
+### Логика работы
+```javascript
+// Копируем catalog/index.html в catalog.html
+const sourcePath = path.join(publicDir, 'catalog', 'index.html')
+const targetPath = path.join(publicDir, 'catalog.html')
+fs.copyFileSync(sourcePath, targetPath)
 ```
 
 ## 🔧 Troubleshooting

@@ -22,7 +22,10 @@ export default defineNuxtConfig({
     },
     // Статическая генерация для продакшена
     prerender: {
-      routes: ['/']
+      routes: [
+        '/',
+        '/catalog'
+      ]
     }
   },
 

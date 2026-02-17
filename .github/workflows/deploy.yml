@@ -32,7 +32,7 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Generate static site (SSR disabled for production)
+    - name: Generate static site with post-processing
       run: npm run generate
       env:
         NODE_ENV: production
