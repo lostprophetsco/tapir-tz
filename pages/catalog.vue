@@ -32,13 +32,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
 import AppButton from '~/components/AppButton.vue'
 import AppProductCard from '~/components/AppProductCard.vue'
 import AppFooter from '~/components/AppFooter.vue'
-import type { Product, ApiResponse } from '~/types/api'
-import { useApi } from '~/composables/useApi'
+import { useProductsStore } from '~/stores/products'
 
 // SEO Meta теги
 useHead({
@@ -51,88 +51,21 @@ useHead({
   ],
 })
 
-const { fetchProducts: fetchProductsApi } = useApi()
+// Используем Pinia store - теперь работает с @pinia/nuxt
+const productsStore = useProductsStore()
 
-const products = ref<Product[]>([])
-const loading = ref(false)
-const loadingMore = ref(false)
-const error = ref<string | null>(null)
-const hasMore = ref(true)
-const apiLimit = ref<number>(10) // Сохраняем реальный лимит из API
+// Используем storeToRefs для сохранения реактивности
+const {
+  products,
+  isLoading,
+  hasError,
+  error,
+  showLoadMore,
+  isLoadingMore
+} = storeToRefs(productsStore)
 
-const isLoading = computed(() => loading.value)
-const hasError = computed(() => !!error.value)
-const showLoadMore = computed(() => hasMore.value && !isLoading.value && !hasError.value)
-const isLoadingMore = computed(() => loadingMore.value || loading.value)
-
-const fetchProducts = async () => {
-  try {
-    loading.value = true
-    error.value = null
-
-    console.log('fetchProducts: Starting fetch...')
-
-    // Используем API composable
-    const response = await fetchProductsApi()
-
-    console.log('Full API Response:', response)
-    console.log('Response products:', response.products)
-    console.log('Response limit:', response.limit)
-
-    if (response.products) {
-      products.value = response.products
-      apiLimit.value = response.limit // Сохраняем реальный лимит из API
-      console.log('fetchProducts: Products loaded:', response.products.length)
-      console.log('fetchProducts: API limit set to:', apiLimit.value)
-    } else {
-      error.value = 'Ошибка загрузки товаров'
-      console.log('fetchProducts: No products in response')
-    }
-  } catch (err) {
-    console.error('API Error:', err)
-    error.value = 'Произошла ошибка при загрузке товаров'
-  } finally {
-    loading.value = false
-    console.log('fetchProducts: Finished')
-  }
-}
-
-const loadMore = async () => {
-  try {
-    loadingMore.value = true
-
-    const nextPage = Math.floor(products.value.length / apiLimit.value) + 1
-
-    console.log('loadMore: Starting load more...')
-    console.log('loadMore: Current products count:', products.value.length)
-    console.log('loadMore: Fetching page:', nextPage)
-    console.log('loadMore: Using limit:', apiLimit.value)
-
-    const response = await fetchProductsApi(nextPage, apiLimit.value)
-
-    console.log('Load More Response:', response)
-    console.log('Load More products:', response.products)
-
-    if (response.products) {
-      products.value = [...products.value, ...response.products]
-      hasMore.value = response.products.length === apiLimit.value
-      console.log('loadMore: Products added, total:', products.value.length)
-    } else {
-      error.value = 'Ошибка загрузки дополнительных товаров'
-      console.log('loadMore: No products in response')
-    }
-  } catch (err) {
-    console.error('API Error:', err)
-    error.value = 'Произошла ошибка при загрузке дополнительных товаров'
-  } finally {
-    loadingMore.value = false
-    console.log('loadMore: Finished')
-  }
-}
-
-const retry = () => {
-  fetchProducts()
-}
+// Actions вызываем напрямую из store
+const { fetchProducts, loadMore, retry } = productsStore
 
 onMounted(() => {
   fetchProducts()
