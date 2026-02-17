@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
 
-  // SSR настройки
+  // SSR настройки - включаем обратно
   ssr: true,
 
   // Настройки для API
@@ -20,4 +20,10 @@ export default defineNuxtConfig({
       apiBase: process.env.API_BASE || 'https://test-task-api.tapir.ws',
     },
   },
+
+  // Базовый путь для GitHub Pages (только для ассетов)
+  app: {
+    baseURL: process.env.NODE_ENV === 'production' ? '/tapir-tz/' : '/',
+    buildAssetsDir: '/_nuxt/'
+  }
 })

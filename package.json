@@ -11,7 +11,9 @@
     "lint": "eslint . --fix",
     "lint:style": "stylelint \"**/*.{vue,scss,css}\" --fix",
     "format": "prettier --write .",
-    "type-check": "nuxt typecheck"
+    "type-check": "nuxt typecheck",
+    "deploy:build": "npm run build",
+    "deploy:preview": "npm run generate && npm run preview"
   },
   "dependencies": {
     "nuxt": "^4.3.1",
