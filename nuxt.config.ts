@@ -11,8 +11,20 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
 
-  // SSR настройки - включаем обратно
-  ssr: true,
+  // SSR настройки - только для разработки
+  ssr: process.env.NODE_ENV !== 'production',
+
+  // Настройки для Nitro (для GitHub Pages)
+  nitro: {
+    preset: 'github-pages',
+    output: {
+      publicDir: '.output/public'
+    },
+    // Статическая генерация для продакшена
+    prerender: {
+      routes: ['/']
+    }
+  },
 
   // Настройки для API
   runtimeConfig: {
@@ -21,7 +33,7 @@ export default defineNuxtConfig({
     },
   },
 
-  // Базовый путь для GitHub Pages (только для ассетов)
+  // Базовый путь для GitHub Pages
   app: {
     baseURL: process.env.NODE_ENV === 'production' ? '/tapir-tz/' : '/',
     buildAssetsDir: '/_nuxt/'
